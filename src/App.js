@@ -12,10 +12,10 @@ function App() {
   const onUpdateTodo = (todo) => {
     const todoItemIndex = todos.findIndex((x) => x.id == todo.id);
     const newTodos = [...todos];
-
-    const newTodo = newTodos[todoItemIndex];
-    newTodo.completed = !newTodo.completed;
-    newTodos[todoItemIndex] = newTodo;
+    newTodos[todoItemIndex].completed = !newTodos[todoItemIndex].completed;
+    // const newTodo = newTodos[todoItemIndex];
+    // newTodo.completed = !newTodo.completed;
+    // newTodos[todoItemIndex] = newTodo;
     setTodos(newTodos);
   };
 
@@ -38,8 +38,8 @@ function App() {
     axios
       .post("https://jsonplaceholder.typicode.com/todos", data)
       .then((res) => {
-        setTodos([...todos, data]);
-        console.log(data);
+        setTodos([...todos, res.data]);
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
