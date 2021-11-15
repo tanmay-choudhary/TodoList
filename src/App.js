@@ -25,13 +25,52 @@ function App() {
     });
   }, []);
 
+  const [todo, setTodo] = useState("");
+
+  function handleSubmit() {
+    const data = {
+      userId: 1,
+      id: Math.floor(Math.random() * 800 + 201),
+      title: todo,
+      completed: false,
+    };
+
+    axios
+      .post("https://jsonplaceholder.typicode.com/todos", data)
+      .then((res) => {
+        setTodos([...todos, data]);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
-    <div className="container">
-      {todos ? (
-        <TodoList todos={todos} onUpdateTodo={onUpdateTodo} />
-      ) : (
-        <Loading />
-      )}
+    <div>
+      <div className="container">
+        <h2>TODO PROJECT</h2>
+        Add ToDo:
+        <input
+          value={todo}
+          type="text"
+          name="todo"
+          onChange={(event) => {
+            setTodo(event.target.value);
+          }}
+          align="left"
+        />
+        <button className="btn btn-primary" onClick={handleSubmit}>
+          Add
+        </button>
+      </div>
+      <div className="container">
+        {todos ? (
+          <TodoList todos={todos} onUpdateTodo={onUpdateTodo} />
+        ) : (
+          <Loading />
+        )}
+      </div>
     </div>
   );
 }
